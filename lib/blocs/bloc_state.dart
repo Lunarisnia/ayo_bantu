@@ -10,6 +10,6 @@ class Success extends BlocState {
 }
 
 class Error extends BlocState {
-  String message;
+  var message;
   Error(this.message);
 }

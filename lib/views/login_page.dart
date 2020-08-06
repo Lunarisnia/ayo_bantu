@@ -23,8 +23,11 @@ class LoginPageBody extends StatelessWidget {
         child: Center(
           child: BlocBuilder<LoginBloc, BlocState>(
             builder: (context, state) {
-              if (state is Success) {
+              if (state is Waiting) {
+                BlocProvider.of<LoginBloc>(context).add(AuthCheck());
+              } else if (state is Success) {
                 print(state.data);
+                return Text("Logged In");
               } else if (state is Error) {
                 print(state.message);
               }
