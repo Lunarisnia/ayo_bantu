@@ -1,1 +1,7 @@
-const String API = "http://192.168.43.207:10";
+const String API = "https://ayo-bantu-backend.herokuapp.com";
+
+const String loginApi = "$API/auth/login";
+
+const String registerApi = "$API/auth/register";
+
+const String checkToken = "$API/auth/check";
