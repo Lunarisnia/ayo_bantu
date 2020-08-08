@@ -55,6 +55,17 @@ class AuthService {
     }
   }
 
+  logout() async {
+    try {
+      final resp = await storage.delete(key: 'token');
+
+      return resp;
+    } catch (e) {
+      print(e);
+      throw Exception("Error: A3");
+    }
+  }
+
   Future<bool> isSignedIn() async {
     final String token = await storage.read(key: 'token');
     return token != null;

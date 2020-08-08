@@ -6,3 +6,5 @@ class Login extends BlocEvent {
 }
 
 class AuthCheck extends BlocEvent {}
+
+class Logout extends BlocEvent {}

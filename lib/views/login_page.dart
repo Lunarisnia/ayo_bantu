@@ -31,7 +31,9 @@ class LoginPageBody extends StatelessWidget {
               }
               if (state is Success) {
                 print(state.data);
-                return HomePage();
+                if (state.data) {
+                  return HomePage();
+                }
               } else if (state is Error) {
                 print(state.message);
               }
@@ -41,10 +43,15 @@ class LoginPageBody extends StatelessWidget {
                   RaisedButton(
                     onPressed: () => {
                       BlocProvider.of<LoginBloc>(context).add(
-                        Login({"email": "rio@mail.com", "password": "1234"}),
+                        Login({"email": "rio@gmail.com", "password": "1234"}),
                       ),
                     },
                     child: Text("Login"),
+                  ),
+                  RaisedButton(
+                    onPressed: () =>
+                        {BlocProvider.of<LoginBloc>(context).add(Logout())},
+                    child: Text("Logout"),
                   ),
                 ],
               );

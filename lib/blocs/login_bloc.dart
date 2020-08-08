@@ -27,6 +27,15 @@ class LoginBloc extends Bloc<BlocEvent, BlocState> {
       } catch (e) {
         yield Error(e);
       }
+    } else if (event is Logout) {
+      yield Loading();
+      try {
+        final resp = await authService.logout();
+
+        yield Success(resp);
+      } catch (e) {
+        yield Error(e);
+      }
     }
   }
 }
