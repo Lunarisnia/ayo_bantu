@@ -1,6 +1,8 @@
 import 'package:ayo_bantu/blocs/bloc_event.dart';
 import 'package:ayo_bantu/blocs/bloc_state.dart';
 import 'package:ayo_bantu/blocs/login_bloc.dart';
+import 'package:ayo_bantu/views/home_page.dart';
+import 'package:ayo_bantu/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,9 +27,11 @@ class LoginPageBody extends StatelessWidget {
             builder: (context, state) {
               if (state is Waiting) {
                 BlocProvider.of<LoginBloc>(context).add(AuthCheck());
-              } else if (state is Success) {
+                return SplashScreen();
+              }
+              if (state is Success) {
                 print(state.data);
-                return Text("Logged In");
+                return HomePage();
               } else if (state is Error) {
                 print(state.message);
               }
@@ -37,7 +41,7 @@ class LoginPageBody extends StatelessWidget {
                   RaisedButton(
                     onPressed: () => {
                       BlocProvider.of<LoginBloc>(context).add(
-                        Login({"email": "rio@gmail.com", "password": "1234"}),
+                        Login({"email": "rio@mail.com", "password": "1234"}),
                       ),
                     },
                     child: Text("Login"),

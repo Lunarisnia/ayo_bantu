@@ -8,7 +8,7 @@ final FlutterSecureStorage storage = FlutterSecureStorage();
 class AuthService {
   login(Map<String, dynamic> credential) async {
     try {
-      final Response resp = await dio.post("$API/auth/login", data: credential);
+      final Response resp = await dio.post(loginApi, data: credential);
 
       await storage.write(key: "token", value: resp.data['token']);
       dio.interceptors.add(
@@ -35,7 +35,7 @@ class AuthService {
 
       if (token != null) {
         final Response result =
-            await dio.post("$API/auth/check", data: {"token": token});
+            await dio.post(checkToken, data: {"token": token});
         if (result.data['status'] == 1) {
           dio.interceptors.add(
             InterceptorsWrapper(
@@ -53,5 +53,10 @@ class AuthService {
       print(e);
       throw Exception("Error: A2");
     }
+  }
+
+  Future<bool> isSignedIn() async {
+    final String token = await storage.read(key: 'token');
+    return token != null;
   }
 }

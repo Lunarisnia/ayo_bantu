@@ -1,7 +1,7 @@
-const String API = "https://ayo-bantu-backend.herokuapp.com";
+const String aPI = "https://ayo-bantu-backend.herokuapp.com";
 
-const String loginApi = "$API/auth/login";
+const String loginApi = "$aPI/auth/login";
 
-const String registerApi = "$API/auth/register";
+const String registerApi = "$aPI/auth/register";
 
-const String checkToken = "$API/auth/check";
+const String checkToken = "$aPI/auth/check";

@@ -1,7 +1,12 @@
+import 'package:ayo_bantu/blocs/bloc_observer.dart';
+import 'package:ayo_bantu/route.dart';
 import 'package:ayo_bantu/views/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = SimpleBlocObserver();
   runApp(MyApp());
 }
 
@@ -15,9 +20,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: LoginPage.tag,
-      routes: {
-        LoginPage.tag: (_) => LoginPage(),
-      },
+      routes: Routes.getAll(),
     );
   }
 }
