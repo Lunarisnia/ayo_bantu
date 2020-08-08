@@ -1,6 +1,8 @@
 import 'package:ayo_bantu/blocs/bloc_event.dart';
 import 'package:ayo_bantu/blocs/bloc_state.dart';
 import 'package:ayo_bantu/blocs/login_bloc.dart';
+import 'package:ayo_bantu/components/login_page/login_button.dart';
+import 'package:ayo_bantu/components/login_page/login_fields.dart';
 import 'package:ayo_bantu/views/home_page.dart';
 import 'package:ayo_bantu/views/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +13,15 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: LoginPageBody(),
     );
   }
 }
 
 class LoginPageBody extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginBloc>(
@@ -27,32 +32,59 @@ class LoginPageBody extends StatelessWidget {
             builder: (context, state) {
               if (state is Waiting) {
                 BlocProvider.of<LoginBloc>(context).add(AuthCheck());
-                return SplashScreen();
-              }
-              if (state is Success) {
+                // return SplashScreen();
+              } else if (state is Success) {
                 print(state.data);
                 if (state.data) {
+                  //redirect to home
                   return HomePage();
                 }
               } else if (state is Error) {
-                print(state.message);
+                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(state.message),
+                  ));
+                });
+              } else if (state is Loading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              return Stack(
                 children: <Widget>[
-                  RaisedButton(
-                    onPressed: () => {
-                      BlocProvider.of<LoginBloc>(context).add(
-                        Login({"email": "rio@gmail.com", "password": "1234"}),
+                  Image.asset(
+                    'assets/images/login-background.png',
+                    height: MediaQuery.of(context).size.height,
+                    fit: BoxFit.cover,
+                  ),
+                  Center(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          LoginFields(
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "This field can't be empty";
+                              }
+                              return null;
+                            },
+                          ),
+                          LoginButton(
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                return Scaffold.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text("Login-in"),
+                                ));
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                    },
-                    child: Text("Login"),
-                  ),
-                  RaisedButton(
-                    onPressed: () =>
-                        {BlocProvider.of<LoginBloc>(context).add(Logout())},
-                    child: Text("Logout"),
-                  ),
+                    ),
+                  )
                 ],
               );
             },
