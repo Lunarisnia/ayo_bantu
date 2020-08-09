@@ -6,7 +6,7 @@ final Dio dio = Dio();
 final FlutterSecureStorage storage = FlutterSecureStorage();
 
 class AuthService {
-  // For Login
+  // For Logins
   login(Map<String, dynamic> credential) async {
     try {
       final Response resp = await Dio().post(loginApi, data: credential);
