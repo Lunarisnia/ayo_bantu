@@ -1,5 +1,3 @@
-import 'package:ayo_bantu/constant/config.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class LoginFields extends StatefulWidget {
@@ -14,13 +12,6 @@ class _LoginFieldsState extends State<LoginFields> {
     setState(() {
       _isHidden = !_isHidden;
     });
-  }
-
-  void loginWithEmailandPassword(String email, String password) {
-    String userEmail = email;
-    String userPassword = password;
-
-    Dio.post(loginApi, data: {"email": userEmail, "password": userPassword});
   }
 
   @override
@@ -58,12 +49,11 @@ class _LoginFieldsState extends State<LoginFields> {
                 ),
                 TextFormField(
                   controller: passwordController,
-                  validator: (val){
-                    val = passwordController.text;
-                    if (val.isEmpty) {
+                  validator: (value){
+                    if (value.isEmpty) {
                       return 'this field cannot be empty';
                     }
-                    return val;
+                    return null;
                   },
                   obscureText: _isHidden,
                   decoration: InputDecoration(

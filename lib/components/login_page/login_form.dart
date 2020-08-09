@@ -1,6 +1,7 @@
 import 'package:ayo_bantu/components/login_page/facebook_button.dart';
 import 'package:ayo_bantu/components/login_page/google_button.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'login_fields.dart';
 
 class LoginForm extends StatelessWidget {
@@ -48,7 +49,7 @@ class LoginForm extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GoogleButton(),
-                    FacebookButton(),
+                    FacebookButton()
                   ],
                 ),
               ),
