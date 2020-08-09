@@ -23,8 +23,7 @@ class LoginBloc extends Bloc<BlocEvent, BlocState> {
       try {
         final resp = await authService.tokenCheck();
 
-        // yield Success(resp);
-        yield Error("InvalidPass");
+        yield Success(resp);
       } catch (e) {
         yield Error(e);
       }

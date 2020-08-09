@@ -1,10 +1,8 @@
 import 'package:ayo_bantu/blocs/bloc_event.dart';
 import 'package:ayo_bantu/blocs/bloc_state.dart';
 import 'package:ayo_bantu/blocs/login_bloc.dart';
-import 'package:ayo_bantu/components/login_page/login_button.dart';
-import 'package:ayo_bantu/components/login_page/login_fields.dart';
+import 'package:ayo_bantu/components/login_page/login_form.dart';
 import 'package:ayo_bantu/views/home_page.dart';
-import 'package:ayo_bantu/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +18,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginPageBody extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+  
 
   @override
   Widget build(BuildContext context) {
@@ -50,43 +48,7 @@ class LoginPageBody extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              return Stack(
-                children: <Widget>[
-                  Image.asset(
-                    'assets/images/login-background.png',
-                    height: MediaQuery.of(context).size.height,
-                    fit: BoxFit.cover,
-                  ),
-                  Center(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          LoginFields(
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "This field can't be empty";
-                              }
-                              return null;
-                            },
-                          ),
-                          LoginButton(
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                return Scaffold.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text("Login-in"),
-                                ));
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              );
+              return LoginForm();
             },
           ),
         ),

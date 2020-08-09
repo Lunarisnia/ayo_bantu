@@ -1,8 +1,9 @@
 import 'package:ayo_bantu/blocs/bloc_observer.dart';
-import 'package:ayo_bantu/route.dart';
-import 'package:ayo_bantu/views/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'views/login_page.dart';
+import 'views/register_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,11 +17,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ayo Bantu',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.cyan,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: "/",
-      routes: Routes.getAll(),
+      routes: {
+        "/": (context) => LoginPage(),
+        "/register": (context) => RegisterPage(),
+      },
     );
   }
 }
