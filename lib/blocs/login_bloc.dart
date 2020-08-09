@@ -16,7 +16,6 @@ class LoginBloc extends Bloc<BlocEvent, BlocState> {
 
         yield Success(resp);
       } catch (e) {
-        print(e);
         yield Error(e.toString());
       }
     } else if (event is AuthCheck) {
@@ -26,7 +25,7 @@ class LoginBloc extends Bloc<BlocEvent, BlocState> {
 
         yield Success(resp);
       } catch (e) {
-        yield Error(e.message);
+        yield Error(e.toString());
       }
     } else if (event is Logout) {
       yield Loading();
@@ -35,7 +34,7 @@ class LoginBloc extends Bloc<BlocEvent, BlocState> {
 
         yield Success(resp);
       } catch (e) {
-        yield Error(e.message);
+        yield Error(e.toString());
       }
     }
   }
