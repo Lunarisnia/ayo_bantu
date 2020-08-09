@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController fullNameController;
+  TextEditingController passwordController;
+  TextEditingController retypePassword;
+  TextEditingController emailController;
+  bool _isHidden = true;
+  void _toggleVisibility() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -16,7 +32,7 @@ class RegisterPage extends StatelessWidget {
           Image.asset("assets/images/logo.png"),
           Positioned(
             top: 25,
-            left: 10,
+            left: 0,
             child: Row(
               children: <Widget>[
                 IconButton(
@@ -27,15 +43,15 @@ class RegisterPage extends StatelessWidget {
                 Text(
                   'Sign Up',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18
-                  ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.black45),
                 )
               ],
             ),
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: height * 0.27),
               Padding(
@@ -157,9 +173,6 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               ),
-              ],
-        ),
-      ),
             ],
           )
         ],
