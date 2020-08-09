@@ -22,6 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
           Image.asset(
@@ -54,7 +55,9 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: height * 0.27),
-              Padding(
+              Column(
+                children: <Widget>[
+                  Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Container(
                   decoration: BoxDecoration(
@@ -173,6 +176,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
+                ],
+              ),
+              
             ],
           )
         ],
