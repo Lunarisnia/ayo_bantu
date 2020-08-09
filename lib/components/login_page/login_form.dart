@@ -1,10 +1,15 @@
+import 'package:ayo_bantu/blocs/bloc_event.dart';
+import 'package:ayo_bantu/blocs/login_bloc.dart';
 import 'package:ayo_bantu/components/login_page/facebook_button.dart';
 import 'package:ayo_bantu/components/login_page/google_button.dart';
+import 'package:ayo_bantu/components/login_page/login_button.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'login_fields.dart';
 
 class LoginForm extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,17 +36,22 @@ class LoginForm extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: height * 0.3),
-              LoginFields(),
-              // LoginButton(
-              //   onPressed: () {
-              //     if (_formKey.currentState.validate()) {
-              //       return Scaffold.of(context).showSnackBar(SnackBar(
-              //         content: Text("Login-in"),
-              //       ));
-              //     }
-              //     return Container();
-              //   },
-              // ),
+              LoginFields(
+                emailController: emailController,
+                passwordController: passwordController,
+              ),
+              LoginButton(
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    BlocProvider.of<LoginBloc>(context).add(
+                      Login({
+                        "email": emailController.text,
+                        "password": passwordController.text
+                      }),
+                    );
+                  }
+                },
+              ),
               SizedBox(height: height * 0.18),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
@@ -58,16 +68,15 @@ class LoginForm extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Don\'t have an account?'),
+                    Text("Don't have an account?"),
                     SizedBox(width: 5),
                     InkWell(
                       child: Text(
                         'Sign Up',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.cyan,
-                          decoration: TextDecoration.underline
-                        ),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.cyan,
+                            decoration: TextDecoration.underline),
                       ),
                       onTap: () => Navigator.of(context).pushNamed("/register"),
                     )

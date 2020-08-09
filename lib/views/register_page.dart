@@ -29,14 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
             height: MediaQuery.of(context).size.height,
             fit: BoxFit.cover,
           ),
-          Column(
-            children: <Widget>[
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Image.asset("assets/images/logo.png"),
-            ],
-          ),
+          Image.asset("assets/images/logo.png"),
           Positioned(
             top: 25,
             left: 0,
@@ -60,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: height * 0.33),
+              SizedBox(height: height * 0.27),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Container(

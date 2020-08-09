@@ -2,12 +2,11 @@ import 'package:ayo_bantu/blocs/bloc_event.dart';
 import 'package:ayo_bantu/blocs/bloc_state.dart';
 import 'package:ayo_bantu/blocs/login_bloc.dart';
 import 'package:ayo_bantu/components/login_page/login_form.dart';
-import 'package:ayo_bantu/views/home_page.dart';
+import 'package:ayo_bantu/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatelessWidget {
-  static const tag = "/";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +17,6 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginPageBody extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginBloc>(
@@ -30,12 +27,12 @@ class LoginPageBody extends StatelessWidget {
             builder: (context, state) {
               if (state is Waiting) {
                 BlocProvider.of<LoginBloc>(context).add(AuthCheck());
-                // return SplashScreen();
               } else if (state is Success) {
-                print(state.data);
                 if (state.data) {
-                  //redirect to home
-                  return HomePage();
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    Navigator.of(context).pushReplacementNamed('/home');
+                  });
+                  return SplashScreen();
                 }
               } else if (state is Error) {
                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
