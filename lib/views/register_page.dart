@@ -6,6 +6,10 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController fullNameController;
+  TextEditingController passwordController;
+  TextEditingController retypePassword;
+  TextEditingController emailController;
   bool _isHidden = true;
   void _toggleVisibility() {
     setState(() {
@@ -70,6 +74,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "This field cannot be empty";
+                          }
+                           return null;
+                        },
+                        controller: fullNameController,
                         decoration: InputDecoration(
                           fillColor: Colors.red,
                           focusColor: Colors.red,
@@ -78,6 +89,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       TextFormField(
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "This field cannot be empty";
+                          }
+                           return null;
+                        },
+                        controller: emailController,
                         decoration: InputDecoration(
                             fillColor: Colors.red,
                             focusColor: Colors.red,
@@ -85,6 +103,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             prefixIcon: Icon(Icons.supervised_user_circle)),
                       ),
                       TextFormField(
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "This field cannot be empty";
+                          }
+                           return null;
+                        },
+                        controller: passwordController,
                         obscureText: _isHidden,
                         decoration: InputDecoration(
                           labelText: "Password",
@@ -98,6 +123,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       TextFormField(
+                        controller: retypePassword,
+                        validator: (value) {
+                          if (value != passwordController.text) {
+                            return "password didn't match";
+                          }
+                          return null;
+                        },
                         obscureText: _isHidden,
                         decoration: InputDecoration(
                           labelText: "Retype Password",
