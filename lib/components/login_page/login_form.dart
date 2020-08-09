@@ -1,7 +1,6 @@
 import 'package:ayo_bantu/components/login_page/facebook_button.dart';
 import 'package:ayo_bantu/components/login_page/google_button.dart';
 import 'package:flutter/material.dart';
-import 'login_button.dart';
 import 'login_fields.dart';
 
 class LoginForm extends StatelessWidget {
@@ -31,24 +30,17 @@ class LoginForm extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: height * 0.3),
-              LoginFields(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "This field can't be empty";
-                  }
-                  return null;
-                },
-              ),
-              LoginButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    return Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text("Login-in"),
-                    ));
-                  }
-                  return Container();
-                },
-              ),
+              LoginFields(),
+              // LoginButton(
+              //   onPressed: () {
+              //     if (_formKey.currentState.validate()) {
+              //       return Scaffold.of(context).showSnackBar(SnackBar(
+              //         content: Text("Login-in"),
+              //       ));
+              //     }
+              //     return Container();
+              //   },
+              // ),
               SizedBox(height: height * 0.18),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
