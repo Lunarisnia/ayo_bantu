@@ -8,3 +8,8 @@ class Login extends BlocEvent {
 class AuthCheck extends BlocEvent {}
 
 class Logout extends BlocEvent {}
+
+class Register extends BlocEvent {
+  final Map<String,dynamic> newUserData;
+  Register(this.newUserData);
+}

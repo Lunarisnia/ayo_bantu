@@ -12,11 +12,14 @@ class AuthService {
 
       await storage.write(key: "token", value: resp.data['token']);
       dio.interceptors.add(
-        InterceptorsWrapper(
-          onRequest: (RequestOptions options) => {
-            options.headers['authorization'] = "Bearer ${resp.data['token']}"
-          },
-        ),
+        InterceptorsWrapper(onRequest: (RequestOptions options) async {
+          final customHeaders = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${resp.data['token']}',
+          };
+          options.headers.addAll(customHeaders);
+          return options;
+        }),
       );
       return true;
     } on DioError catch (e) {
@@ -38,13 +41,18 @@ class AuthService {
             await Dio().post(checkToken, data: {"token": token});
         if (result.data['status'] == 1) {
           dio.interceptors.add(
-            InterceptorsWrapper(
-              onRequest: (RequestOptions options) =>
-                  {options.headers['authorization'] = "Bearer $token"},
-            ),
+            InterceptorsWrapper(onRequest: (RequestOptions options) async {
+              final customHeaders = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token',
+              };
+              options.headers.addAll(customHeaders);
+              return options;
+            }),
           );
           return true;
         }
+        await this.logout();
         return false;
       } else {
         return false;
@@ -63,6 +71,20 @@ class AuthService {
     } catch (e) {
       print(e);
       throw Exception("Error: A3");
+    }
+  }
+
+  Future<bool> register(Map<String, dynamic> newUserData) async {
+    try {
+      final resp = await Dio().post(registerApi, data: newUserData);
+
+      await storage.write(key: 'token', value: resp.data['token']);
+      final authenticated = await this.tokenCheck();
+
+      return authenticated;
+    } catch (e) {
+      print(e);
+      throw Exception("Error: A4");
     }
   }
 

@@ -36,6 +36,15 @@ class LoginBloc extends Bloc<BlocEvent, BlocState> {
       } catch (e) {
         yield Error(e.toString());
       }
+    } else if (event is Register) {
+      yield Loading();
+      try {
+        final resp = await authService.register(event.newUserData);
+
+        yield Success(resp);
+      } catch (e) {
+        yield Error(e.toString());
+      }
     }
   }
 }
