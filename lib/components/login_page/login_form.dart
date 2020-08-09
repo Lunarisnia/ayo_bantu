@@ -59,7 +59,7 @@ class LoginForm extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     GoogleButton(),
-                    FacebookButton()
+                    FacebookButton(),
                   ],
                 ),
               ),
