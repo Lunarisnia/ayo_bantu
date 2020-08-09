@@ -16,7 +16,10 @@ class LoginButton extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color.fromRGBO(85,190,186, 1), Color.fromRGBO(218,235,199, 1)],
+                colors: [
+                  Color.fromRGBO(85, 190, 186, 1),
+                  Color.fromRGBO(218, 235, 199, 1)
+                ],
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
               ),

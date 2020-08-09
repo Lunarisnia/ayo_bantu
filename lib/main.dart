@@ -1,4 +1,5 @@
 import 'package:ayo_bantu/blocs/bloc_observer.dart';
+import 'package:ayo_bantu/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => LoginPage(),
+        "/home": (_) => HomePage(),
         "/register": (context) => RegisterPage(),
       },
     );
