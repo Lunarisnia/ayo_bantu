@@ -1,7 +1,40 @@
+import 'package:ayo_bantu/components/home_page/dash_board.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+  final List<Widget> pages = <Widget>[
+    Center(
+      child: Text("OKE"),
+    ),
+    DashBoard(),
+    Center(
+      child: Text("44"),
+    ),
+    Center(
+      child: Text("AAAAAAAAA"),
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 1);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -30,18 +63,19 @@ class HomePage extends StatelessWidget {
                   Color.fromRGBO(218, 235, 199, 1)
                 ])),
           ),
-          bottom: TabBar(tabs: [
-            Tab(icon: Icon(FontAwesomeIcons.bars, color: Colors.white)),
-            Tab(icon: Icon(FontAwesomeIcons.home, color: Colors.white)),
-            Tab(icon: Icon(FontAwesomeIcons.bell, color: Colors.white)),
-            Tab(icon: Icon(Icons.restore, color: Colors.white)),
-          ]),
-        ),
-        body: Container(
-          decoration: BoxDecoration(color: Colors.red),
-          child: Center(
-            child: Image.asset('assets/images/logo-smaller.png'),
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(FontAwesomeIcons.bars, color: Colors.white)),
+              Tab(icon: Icon(FontAwesomeIcons.home, color: Colors.white)),
+              Tab(icon: Icon(FontAwesomeIcons.bell, color: Colors.white)),
+              Tab(icon: Icon(Icons.restore, color: Colors.white)),
+            ],
+            controller: _tabController,
           ),
+        ),
+        body: TabBarView(
+          controller: _tabController,
+          children: pages,
         ),
       ),
     );
