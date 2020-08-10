@@ -47,31 +47,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-// Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             RaisedButton(
-//               onPressed: () async {
-//                 try {
-//                   final user = await dio.post(currentUser);
-
-//                   print(user.data.toString());
-//                 } catch (e) {
-//                   print(e);
-//                 }
-//               },
-//               child: Text("Show Active User"),
-//             ),
-//             RaisedButton(
-//               onPressed: () async {
-//                 final storage = FlutterSecureStorage();
-//                 await storage.delete(key: 'token');
-//                 Navigator.of(context).pushReplacementNamed('/');
-//               },
-//               child: Text("Logout"),
-//             ),
-//           ],
-//         ),
-//       ),
