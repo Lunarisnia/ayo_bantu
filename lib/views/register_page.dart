@@ -35,7 +35,8 @@ class _RegisterPageState extends State<RegisterPage> {
           builder: (context, state) {
             if (state is Success) {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                Navigator.of(context).pushReplacementNamed('/home');
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/home', ModalRoute.withName('/home'));
               });
               return SplashScreen();
             } else if (state is Error) {
