@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'Montserrat',
       ),
       initialRoute: "/",
       routes: {

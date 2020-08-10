@@ -1,3 +1,4 @@
+import 'package:ayo_bantu/components/drawer/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -6,6 +7,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
+      initialIndex: 1,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -37,12 +39,12 @@ class HomePage extends StatelessWidget {
             Tab(icon: Icon(Icons.restore, color: Colors.white)),
           ]),
         ),
-        body: Container(
-          decoration: BoxDecoration(color: Colors.red),
-          child: Center(
-            child: Image.asset('assets/images/logo-smaller.png'),
-          ),
-        ),
+        body: TabBarView(children: [
+          CustomDrawer(),
+          Text('1'),
+          Text('1'),
+          Text('1'),
+        ])
       ),
     );
   }

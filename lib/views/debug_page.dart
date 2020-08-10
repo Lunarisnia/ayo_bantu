@@ -18,6 +18,7 @@ class DebugPage extends StatelessWidget {
                     final user = await dio.post(currentUser);
 
                     print(user.data.toString());
+                    print(user.data["fullname"].toString());
                   } catch (e) {
                     print(e);
                   }
