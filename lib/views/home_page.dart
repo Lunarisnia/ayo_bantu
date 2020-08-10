@@ -1,7 +1,4 @@
-import 'package:ayo_bantu/constant/config.dart';
-import 'package:ayo_bantu/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,9 +11,7 @@ class HomePage extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.exit_to_app),
             onPressed: () async {
-              final storage = FlutterSecureStorage();
-              await storage.delete(key: 'token');
-              Navigator.of(context).pushReplacementNamed('/');
+              Navigator.of(context).pushReplacementNamed('/debug');
             },
           ),
           centerTitle: true,
