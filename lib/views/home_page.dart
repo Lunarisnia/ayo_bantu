@@ -1,4 +1,5 @@
 import 'package:ayo_bantu/components/drawer/custom_drawer.dart';
+import 'package:ayo_bantu/components/home_page/dash_board.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -41,10 +42,10 @@ class HomePage extends StatelessWidget {
         ),
         body: TabBarView(children: [
           CustomDrawer(),
+          DashBoard(),
           Text('1'),
           Text('1'),
-          Text('1'),
-        ])
+        ]),
       ),
     );
   }

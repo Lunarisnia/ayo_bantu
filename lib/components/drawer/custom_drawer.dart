@@ -1,4 +1,3 @@
-import 'package:ayo_bantu/constant/config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,10 +6,12 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Container(
+      height: 300,
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/profile_BG.png'),
-            fit: BoxFit.cover),
+          image: AssetImage('assets/images/profile_BG.png'),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

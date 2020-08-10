@@ -27,15 +27,34 @@ class PostCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      IconButton(
+                      PopupMenuButton(
+                        onSelected: (value){
+                          print(value);
+                        },
+                        itemBuilder: (BuildContext context) {
+                          var popup = List<PopupMenuEntry<Object>>();
+                          popup.add(
+                            PopupMenuItem(
+                              value: 'Report',
+                              child: Text('Report'),
+                            ),
+                          );
+                          return popup;
+                        },
                         icon: Icon(
                           FontAwesomeIcons.ellipsisV,
                           color: Colors.white,
                         ),
-                        onPressed: () {
-                          print("dropdown to report");
-                        },
-                      ),
+                      )
+                      // IconButton(
+                      //   icon: Icon(
+                      //     FontAwesomeIcons.ellipsisV,
+                      //     color: Colors.white,
+                      //   ),
+                      //   onPressed: () {
+                      //     return Text('test');
+                      //   },
+                      // ),
                     ],
                   ),
                   SizedBox(
@@ -102,7 +121,9 @@ class PostCard extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 _DonateButton(),
               ],
             ),
