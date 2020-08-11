@@ -1,3 +1,4 @@
+import 'package:ayo_bantu/views/leaderboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -98,6 +99,12 @@ class CustomDrawer extends StatelessWidget {
                         color: Color.fromRGBO(49, 82, 91, 1),
                       ),
                     ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) =>  LeaderboardPage()));
+                    },
                   ),
                 ),
               ),
