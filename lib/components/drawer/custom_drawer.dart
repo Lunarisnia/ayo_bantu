@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -145,6 +146,11 @@ class CustomDrawer extends StatelessWidget {
                         color: Color.fromRGBO(49, 82, 91, 1),
                       ),
                     ),
+                    onTap: () async {
+                      final storage = FlutterSecureStorage();
+                      await storage.delete(key: 'token');
+                      Navigator.of(context).pushReplacementNamed('/');
+                    },
                   ),
                 ),
               ),
