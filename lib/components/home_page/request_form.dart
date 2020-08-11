@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:android_intent/android_intent.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RequestForm extends StatefulWidget {
   @override
@@ -15,6 +18,70 @@ class _RequestFormState extends State<RequestForm> {
   Position _currentPosition;
   String _currentAddress;
 
+  @override
+  void initState() {
+    super.initState();
+    requestLocationPermission();
+    _gpsService();
+  }
+
+  Future<bool> _requestPermission(PermissionGroup permission) async {
+    final PermissionHandler _permissionHandler = PermissionHandler();
+    var result = await _permissionHandler.requestPermissions([permission]);
+    if (result[permission] == PermissionStatus.granted) {
+      return true;
+    }
+    return false;
+  }
+
+/*Checking if your App has been Given Permission*/
+  Future<bool> requestLocationPermission({Function onPermissionDenied}) async {
+    var granted = await _requestPermission(PermissionGroup.location);
+    if (granted != true) {
+      requestLocationPermission();
+    }
+    debugPrint('requestLocationPermission $granted');
+    return granted;
+  }
+
+/*Show dialog if GPS not enabled and open settings location*/
+  Future _checkGps() async {
+    if (!(await Geolocator().isLocationServiceEnabled())) {
+      if (Theme.of(context).platform == TargetPlatform.android) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Tidak dapat menerima lokasi saat ini"),
+                content:
+                    const Text('Pastikan aktifkan GPS dan coba lagi'),
+                actions: <Widget>[
+                  FlatButton(
+                      child: Text('Ok'),
+                      onPressed: () {
+                        final AndroidIntent intent = AndroidIntent(
+                            action:
+                                'android.settings.LOCATION_SOURCE_SETTINGS');
+                        intent.launch();
+                        Navigator.of(context, rootNavigator: true).pop();
+                        _gpsService();
+                      })
+                ],
+              );
+            });
+      }
+    }
+  }
+
+/*Check if gps service is enabled or not*/
+  Future _gpsService() async {
+    if (!(await Geolocator().isLocationServiceEnabled())) {
+      _checkGps();
+      return null;
+    } else
+      return true;
+  }
+
   BoxDecoration get _image {
     return _selected == null
         ? BoxDecoration(color: Colors.grey[300])
@@ -24,30 +91,35 @@ class _RequestFormState extends State<RequestForm> {
           );
   }
 
-  _getCurrentLocation() {
+
+  _getCurrentLocation() async{
     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       setState(() {
         _currentPosition = position;
       });
-
+      
       _getAddressFromLatLng();
     }).catchError((e) {
       print(e);
     });
   }
 
+
   _getAddressFromLatLng() async {
     try {
+      GeolocationStatus geolocationStatus  = await geolocator.checkGeolocationPermissionStatus();
       List<Placemark> p = await geolocator.placemarkFromCoordinates(
           _currentPosition.latitude, _currentPosition.longitude);
 
       Placemark place = p[0];
 
       setState(() {
+        print(geolocationStatus);
         _currentAddress =
-            "${place.locality}, ${place.postalCode}, ${place.country}";
+            "${place.name}, ${place.thoroughfare}, ${place.postalCode}";
+            
       });
     } catch (e) {
       print(e);
@@ -149,7 +221,10 @@ class _RequestFormState extends State<RequestForm> {
                     bottom: 8.0,
                     child: FloatingActionButton(
                       backgroundColor: Colors.cyan[300],
-                      child: Icon(Icons.photo_library, color: Colors.white,),
+                      child: Icon(
+                        Icons.photo_library,
+                        color: Colors.white,
+                      ),
                       onPressed: () async {
                         final PickedFile image = await ImagePicker()
                             .getImage(source: ImageSource.gallery);
@@ -210,17 +285,23 @@ class _RequestFormState extends State<RequestForm> {
               padding: const EdgeInsets.only(left: 18.0),
               child: RaisedButton(
                 child: Text('Your location'),
-                onPressed: (){
+                onPressed: () {
+                  print(_currentAddress);
                   _getCurrentLocation();
                 },
               ),
             ),
-            if (_currentPosition != null) Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(_currentAddress),
-              ],
-            )
+            if (_currentPosition != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  AutoSizeText(
+                    _currentAddress,
+                    maxFontSize: 18,
+                    minFontSize: 13,
+                  ),
+                ],
+              )
           ],
         ),
       ),
