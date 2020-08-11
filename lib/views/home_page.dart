@@ -25,13 +25,15 @@ class HomePage extends StatelessWidget {
           ),
           flexibleSpace: Container(
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.topRight,
-                    colors: <Color>[
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.topRight,
+                colors: <Color>[
                   Color.fromRGBO(85, 190, 186, 1),
                   Color.fromRGBO(218, 235, 199, 1)
-                ])),
+                ],
+              ),
+            ),
           ),
           bottom: TabBar(tabs: [
             Tab(icon: Icon(FontAwesomeIcons.bars, color: Colors.white)),

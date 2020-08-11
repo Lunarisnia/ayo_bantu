@@ -1,5 +1,6 @@
 import 'package:ayo_bantu/components/home_page/post_card.dart';
 import 'package:flutter/material.dart';
+import 'package:ayo_bantu/components/home_page/request_form.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DashBoard extends StatelessWidget {
@@ -9,7 +10,13 @@ class DashBoard extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromRGBO(85, 190, 186, 1),
         onPressed: () {
-          print("Create post page");
+          showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) {
+              return RequestForm();
+            },
+          );
         },
         child: Icon(
           FontAwesomeIcons.pencilAlt,
