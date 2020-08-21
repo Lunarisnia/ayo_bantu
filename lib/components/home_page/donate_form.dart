@@ -6,17 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:ayo_bantu/models/donate_model.dart';
 
-class RequestForm extends StatefulWidget {
+class DonateForm extends StatefulWidget {
+  final Donate donate;
+  DonateForm(this.donate);
   @override
-  _RequestFormState createState() => _RequestFormState();
+  _DonateFormState createState() => _DonateFormState();
 }
 
-class _RequestFormState extends State<RequestForm> {
+class _DonateFormState extends State<DonateForm> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   File _selected;
   Position _currentPosition;
   String _currentAddress;
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final addressController = TextEditingController();
 
   @override
   void initState() {
@@ -53,8 +59,7 @@ class _RequestFormState extends State<RequestForm> {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: Text("Tidak dapat menerima lokasi saat ini"),
-                content:
-                    const Text('Pastikan aktifkan GPS dan coba lagi'),
+                content: const Text('Pastikan aktifkan GPS dan coba lagi'),
                 actions: <Widget>[
                   FlatButton(
                       child: Text('Ok'),
@@ -91,25 +96,24 @@ class _RequestFormState extends State<RequestForm> {
           );
   }
 
-
-  _getCurrentLocation() async{
+  _getCurrentLocation() async {
     geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       setState(() {
         _currentPosition = position;
       });
-      
+
       _getAddressFromLatLng();
     }).catchError((e) {
       print(e);
     });
   }
 
-
   _getAddressFromLatLng() async {
     try {
-      GeolocationStatus geolocationStatus  = await geolocator.checkGeolocationPermissionStatus();
+      GeolocationStatus geolocationStatus =
+          await geolocator.checkGeolocationPermissionStatus();
       List<Placemark> p = await geolocator.placemarkFromCoordinates(
           _currentPosition.latitude, _currentPosition.longitude);
 
@@ -119,11 +123,20 @@ class _RequestFormState extends State<RequestForm> {
         print(geolocationStatus);
         _currentAddress =
             "${place.name}, ${place.thoroughfare}, ${place.postalCode}";
-            
       });
     } catch (e) {
       print(e);
     }
+  }
+
+  Donate addDonation(String title, String address, File image, DateTime date) {
+    final userDonation = Donate(
+      title: title,
+      address: address,
+      image: image,
+      date: date,
+    );
+    return userDonation;
   }
 
   @override
@@ -133,7 +146,7 @@ class _RequestFormState extends State<RequestForm> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text('Request Makanan'),
+          title: Text('Donate Your Food'),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -150,7 +163,12 @@ class _RequestFormState extends State<RequestForm> {
             FlatButton(
               child: Text('POST'),
               onPressed: () {
-                print('Request posted');
+                addDonation(
+                  titleController.value.toString(),
+                  addressController.value.toString(),
+                  _selected,
+                  DateTime.now(),
+                );
               },
             )
           ],
@@ -189,6 +207,7 @@ class _RequestFormState extends State<RequestForm> {
                 bottom: 10.0,
               ),
               child: TextFormField(
+                controller: titleController,
                 decoration: InputDecoration(
                   labelText: 'Title',
                   labelStyle: TextStyle(
@@ -243,6 +262,7 @@ class _RequestFormState extends State<RequestForm> {
                 vertical: 10.0,
               ),
               child: TextFormField(
+                controller: descriptionController,
                 maxLines: 2,
                 decoration: InputDecoration(
                   isDense: true,
@@ -265,6 +285,7 @@ class _RequestFormState extends State<RequestForm> {
                 vertical: 10.0,
               ),
               child: TextFormField(
+                controller: addressController,
                 maxLines: 2,
                 decoration: InputDecoration(
                   isDense: true,
@@ -286,7 +307,8 @@ class _RequestFormState extends State<RequestForm> {
               child: RaisedButton(
                 child: Text('Your location'),
                 onPressed: () {
-                  print(_currentAddress);
+                  print(_currentAddress is String);
+                  print(_selected is File);
                   _getCurrentLocation();
                 },
               ),
